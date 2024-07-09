@@ -1,0 +1,11 @@
+.badge {
+	@apply bg-gradient-to-t px-3.5 rounded-2xl shadow-lg w-max;
+
+	&.blue {
+		@apply from-sky-700 to-sky-400;
+	}
+
+	&.red {
+		@apply from-red-700 to-red-400;
+	}
+}
