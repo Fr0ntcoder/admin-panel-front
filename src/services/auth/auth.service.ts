@@ -13,11 +13,11 @@ interface IAuthResponse {
 }
 
 class AuthService {
-	private auth = '/auth'
+	private base = '/auth'
 
 	async main(type: 'login' | 'register', data: IAuthFormData) {
 		const response = await axiosDefault.post<IAuthResponse>(
-			`${this.auth}/${type}`
+			`${this.base}/${type}`
 		)
 
 		if (response.data.accessToken) {
@@ -29,7 +29,7 @@ class AuthService {
 
 	async getNewToken() {
 		const response = await axiosDefault.post<IAuthResponse>(
-			`${this.auth}/login/access-token`
+			`${this.base}/login/access-token`
 		)
 
 		if (response.data.accessToken) {
@@ -41,7 +41,7 @@ class AuthService {
 
 	async getNewTokensByRefresh(refreshToken: string) {
 		const response = await axiosDefault.post<IAuthResponse>(
-			`${this.auth}/login/access-token`,
+			`${this.base}/login/access-token`,
 			{},
 			{
 				headers: {
@@ -54,7 +54,7 @@ class AuthService {
 	}
 
 	async logout() {
-		const response = await axiosDefault.post<boolean>(`${this.auth}/logout`)
+		const response = await axiosDefault.post<boolean>(`${this.base}/logout`)
 
 		if (response.data) {
 			removeFromStorage()
@@ -64,7 +64,7 @@ class AuthService {
 	}
 
 	async profile() {
-		return instance.get<IUser>(`${this.auth}/profile`)
+		return instance.get<IUser>(`${this.base}/profile`)
 	}
 }
 
