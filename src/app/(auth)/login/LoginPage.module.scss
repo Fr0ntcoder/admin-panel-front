@@ -1,0 +1,11 @@
+.page {
+	@apply min-h-screen flex items-center justify-center bg-neutral-950;
+}
+
+.wrap {
+	@apply bg-neutral-950 p-8 rounded-lg shadow-md;
+}
+
+.title {
+	@apply font-semibold mb-4;
+}

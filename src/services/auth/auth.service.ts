@@ -1,11 +1,11 @@
-import { IAuthFormData, IUser } from '@/types/types'
-
 import { axiosDefault, instance } from '@/api/axios'
 
 import {
 	removeFromStorage,
 	saveTokenStorage
 } from '@/services/auth/auth.helper'
+
+import { IAuthFormData, IUser } from '@/types/types'
 
 interface IAuthResponse {
 	accessToken: string
@@ -17,12 +17,11 @@ class AuthService {
 
 	async main(type: 'login' | 'register', data: IAuthFormData) {
 		const response = await axiosDefault.post<IAuthResponse>(
-			`${this.base}/${type}`
+			`${this.base}/${type}`,
+			data
 		)
 
-		if (response.data.accessToken) {
-			saveTokenStorage(response.data.accessToken)
-		}
+		if (response.data.accessToken) saveTokenStorage(response.data.accessToken)
 
 		return response
 	}
