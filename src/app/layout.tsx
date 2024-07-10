@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { Fira_Mono } from 'next/font/google'
 import { Toaster } from 'react-hot-toast'
 
-import { Providers } from '@/app/Providers'
+import { Provider } from '@/providers/provider'
 
 import './globals.scss'
 
@@ -21,10 +21,10 @@ export default function RootLayout({
 	return (
 		<html lang='en'>
 			<body className={inter.className}>
-				<Providers>
+				<Provider>
 					{children}
 					<Toaster />
-				</Providers>
+				</Provider>
 			</body>
 		</html>
 	)

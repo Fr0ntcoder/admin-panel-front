@@ -1,17 +1,21 @@
 'use client'
 
-import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/buttons/button'
-import { Field } from '@/components/ui/field'
+import { ProfileInfo } from '@/app/admin/profile-info'
+
 import { Loader } from '@/components/ui/loader'
 
+import { useProfile } from '@/hooks/useProfile'
+
 export default function Home() {
-	return (
-		<div>
-			<Button variant='secondary'>Click</Button>
-			<Field label='Имя' placeholder='Введите ваше имя' />
-			<Badge color='blue' value={5} maxValue={10}></Badge>
+	const { user, isLoading } = useProfile()
+	return isLoading ? (
+		<div className='w-screen h-screen flex items-center justify-center'>
 			<Loader />
 		</div>
+	) : (
+		<main className='min-h-screen p-6'>
+			<ProfileInfo />
+			{!user.isAdmin ? 'Вы не являетесь администратором' : <></>}
+		</main>
 	)
 }

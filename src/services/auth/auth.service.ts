@@ -26,7 +26,7 @@ class AuthService {
 		return response
 	}
 
-	async getNewToken() {
+	async getNewTokens() {
 		const response = await axiosDefault.post<IAuthResponse>(
 			`${this.base}/login/access-token`
 		)

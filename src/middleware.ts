@@ -12,6 +12,7 @@ import { UserRole } from '@/types/types'
 export async function middleware(request: NextRequest, response: NextResponse) {
 	const refreshToken = request.cookies.get(EnumTokens.REFRESH_TOKEN)?.value
 	let accessToken = request.cookies.get(EnumTokens.ACCESS_TOKEN)?.value
+	// /admin
 	const isAdminPage = request.url.includes(ROUTE.DEFAULT)
 
 	if (!refreshToken) {
@@ -24,6 +25,14 @@ export async function middleware(request: NextRequest, response: NextResponse) {
 			const data = await authService.getNewTokensByRefresh(refreshToken)
 			accessToken = data.accessToken
 		} catch (error) {
+			// if (isAxiosError(error)) {
+			// 	if (error.message === 'invalid token') {
+			// 		console.log('не валидный токен')
+			// 		request.cookies.delete(EnumTokens.ACCESS_TOKEN)
+			// 		return redirectToLogin(isAdminPage, request)
+			// 	}
+			// }
+
 			request.cookies.delete(EnumTokens.ACCESS_TOKEN)
 			return redirectToLogin(isAdminPage, request)
 		}
@@ -38,27 +47,31 @@ export async function middleware(request: NextRequest, response: NextResponse) {
 		if (payload?.role === UserRole.Admin) return NextResponse.next()
 
 		if (isAdminPage) {
-			return NextResponse.redirect(new URL(ROUTE.NOT_FOUND, request.url))
+			// console.log('Нет доступа к административной странице')
+			return NextResponse.redirect(new URL('/404', request.url))
 		}
 
 		return NextResponse.next()
 	} catch (error) {
+		// Обработка ошибок, связанных с верификацией JWT
 		if (
 			error instanceof Error &&
 			error.message.includes('exp claim timestamp check failed')
 		) {
-			console.log('Ваш токен истек')
+			// Токен истек
+			console.log('Токен истек')
 			return redirectToLogin(isAdminPage, request)
 		}
 
-		console.log('Ошибка при верификации токена', error)
+		console.log('Ошибка при верификации токена: ', error)
 		return redirectToLogin(isAdminPage, request)
 	}
 }
 
 export const config = {
-	matcher: [`${ROUTE.ADMIN}/:path*`, `${ROUTE.PROFILE}/:path*`]
+	matcher: ['/admin/:path*', '/profile/:path*']
 }
+
 const redirectToLogin = (isAdminPage: boolean, request: NextRequest) => {
 	return NextResponse.redirect(
 		new URL(isAdminPage ? ROUTE.NOT_FOUND : ROUTE.LOGIN, request.url)

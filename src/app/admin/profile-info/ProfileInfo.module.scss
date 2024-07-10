@@ -1,0 +1,14 @@
+.root {
+	@apply mb-8 flex gap-5;
+}
+
+.title {
+	@apply font-bold text-2xl;
+}
+
+.content {
+	@apply flex flex-col gap-4;
+}
+.text {
+	@apply text-lg;
+}
