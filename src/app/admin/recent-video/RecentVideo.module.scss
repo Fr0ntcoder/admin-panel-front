@@ -1,0 +1,7 @@
+.title {
+	@apply mb-5;
+}
+
+.link {
+	@apply flex items-center gap-3 bg-gray-500 hover:bg-gray-400 transition-colors py-2 px-4 ease-in-out;
+}
