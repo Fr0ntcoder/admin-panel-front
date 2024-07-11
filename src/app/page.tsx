@@ -1,5 +1,8 @@
 'use client'
 
+import { MainChart } from '@/app/admin/charts/main-chart'
+import { Numbers } from '@/app/admin/charts/numbers'
+import { RadarChart } from '@/app/admin/charts/radar-chart'
 import { ProfileInfo } from '@/app/admin/profile-info'
 
 import { Loader } from '@/components/ui/loader'
@@ -13,9 +16,19 @@ export default function Home() {
 			<Loader />
 		</div>
 	) : (
-		<main className='min-h-screen p-6'>
+		<main className='w-1/2 min-h-screen p-6'>
 			<ProfileInfo />
-			{!user.isAdmin ? 'Вы не являетесь администратором' : <></>}
+			{!user.isAdmin ? (
+				'Вы не являетесь администратором'
+			) : (
+				<div>
+					<MainChart />
+					<Numbers />
+					<div>
+						<RadarChart />
+					</div>
+				</div>
+			)}
 		</main>
 	)
 }

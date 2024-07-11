@@ -1,0 +1,19 @@
+.list {
+	@apply grid grid-cols-4 gap-5 mb-8;
+}
+
+.item {
+	@apply bg-gray-500 rounded-md p-5 grid grid-cols-2 gap-10 cursor-pointer;
+}
+
+.text {
+	@apply h-full flex flex-col;
+
+	.value {
+		@apply mt-auto;
+	}
+}
+
+.chart {
+	@apply flex items-end;
+}
